@@ -21,8 +21,8 @@ void HTTPClient::init(int keepalive){
 	curl_easy_setopt(m_curl, CURLOPT_NOSIGNAL, 1L); //禁止产生信号
 	//https证书忽略
 	curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYHOST, 0L);
-    //返回数据写入句柄
+	curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYHOST, 0L);
+	//返回数据写入句柄
 	curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, HTTPClient::writer);
 	if(keepalive==1){
 		curl_easy_setopt(m_curl,CURLOPT_TIMEOUT,0L);
@@ -51,15 +51,15 @@ HTTPResponse *HTTPClient::Get(string url)
 	struct curl_slist *http_header = NULL;
 	http_header = curl_slist_append(http_header, "Accept: *");
 	http_header = curl_slist_append(http_header, "User-Agent: HB-HTTPCLI");
-    
-    curl_easy_setopt(m_curl,CURLOPT_URL,url.c_str());
+
+	curl_easy_setopt(m_curl,CURLOPT_URL,url.c_str());
 	curl_easy_setopt(m_curl,CURLOPT_HTTPHEADER, http_header);//设置HTTP HEADER
 	curl_easy_setopt(m_curl,CURLOPT_WRITEDATA, &resp->buff);
 	CURLcode code = curl_easy_perform(m_curl);
 	if(code !=CURLE_OK)
-    {
-    	resp->code = code;
-    }
+	{
+		resp->code = code;
+	}
 	curl_slist_free_all(http_header);//http_header需要释放
 	pthread_mutex_unlock(&m_mutex); 
 	return resp;
@@ -81,14 +81,14 @@ HTTPResponse *HTTPClient::Post(string url,string contentType,string data)
 	curl_easy_setopt(m_curl,CURLOPT_URL,url.c_str());
 	curl_easy_setopt(m_curl,CURLOPT_HTTPHEADER, http_header);//设置HTTP HEADER
 	curl_easy_setopt(m_curl,CURLOPT_POST,1L);
- 	curl_easy_setopt(m_curl,CURLOPT_POSTFIELDS, data.c_str());
+	curl_easy_setopt(m_curl,CURLOPT_POSTFIELDS, data.c_str());
 
 	curl_easy_setopt(m_curl,CURLOPT_WRITEDATA, &resp->buff);
 	CURLcode code = curl_easy_perform(m_curl);
 	if(code !=CURLE_OK)
-    {
-    	resp->code = code;
-    }
+	{
+		resp->code = code;
+	}
 	curl_slist_free_all(http_header);//http_header需要释放
 	pthread_mutex_unlock(&m_mutex); 
 	return resp;
@@ -109,13 +109,13 @@ HTTPResponse *HTTPClient::PostForm(string url,string data)
 	curl_easy_setopt(m_curl,CURLOPT_URL,url.c_str());
 	curl_easy_setopt(m_curl,CURLOPT_HTTPHEADER, http_header);//设置HTTP HEADER
 	curl_easy_setopt(m_curl,CURLOPT_POST,1L);
- 	curl_easy_setopt(m_curl,CURLOPT_POSTFIELDS, data.c_str());
+	curl_easy_setopt(m_curl,CURLOPT_POSTFIELDS, data.c_str());
 	curl_easy_setopt(m_curl,CURLOPT_WRITEDATA, &resp->buff);
 	CURLcode code = curl_easy_perform(m_curl);
 	if(code !=CURLE_OK)
-    {
-    	resp->code = code;
-    }
+	{
+		resp->code = code;
+	}
 	curl_slist_free_all(http_header);//http_header需要释放
 	pthread_mutex_unlock(&m_mutex); 
 	return resp;
@@ -123,10 +123,10 @@ HTTPResponse *HTTPClient::PostForm(string url,string data)
 
 int HTTPClient::writer(char *data, size_t size, size_t nmemb,std::string *writerData)
 {
-  if(writerData == NULL)
-    return 0;
- 
-  writerData->append(data, size*nmemb);
- 
-  return size * nmemb;
+	if(writerData == NULL)
+		return 0;
+
+	writerData->append(data, size*nmemb);
+
+	return size * nmemb;
 }

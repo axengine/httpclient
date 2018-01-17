@@ -12,16 +12,16 @@ typedef struct tagResponse
 
 class HTTPClient
 {
-public:
-	HTTPClient();
-	HTTPClient(int keepalive);
-	~HTTPClient();
-    HTTPResponse *Get(string url);
-    HTTPResponse *Post(string url,string contentType,string data);
-    HTTPResponse *PostForm(string url,string data);
-private:
-	void init(int keepalive);
-	pthread_mutex_t m_mutex;
-	CURL *m_curl;
-	static int writer(char *data, size_t size, size_t nmemb,std::string *writerData);
+	public:
+		HTTPClient();
+		HTTPClient(int keepalive);
+		~HTTPClient();
+		HTTPResponse *Get(string url);
+		HTTPResponse *Post(string url,string contentType,string data);
+		HTTPResponse *PostForm(string url,string data);
+	private:
+		void init(int keepalive);
+		pthread_mutex_t m_mutex;
+		CURL *m_curl;
+		static int writer(char *data, size_t size, size_t nmemb,std::string *writerData);
 };
